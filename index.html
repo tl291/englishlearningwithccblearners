@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Học Tiếng Anh Cơ Bản</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to right, #d9f2ff, #ffffff);
+      padding: 30px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: #007acc;
+    }
+    .lesson-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+    .card h2 {
+      font-size: 1.4rem;
+      color: #333;
+    }
+    .card p {
+      font-size: 1.2rem;
+      color: #007acc;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007acc;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #005f99;
+    }
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+
+  <header>
+    <h1>Chào mừng đến với lớp học Tiếng Anh cơ bản</h1>
+    <p>Học từ vựng theo chủ đề thông qua hình ảnh và âm thanh</p>
+  </header>
+
+
+  <div class="lesson-container" id="lessonArea"></div>
+
+
+  <footer>
+    &copy; 2025 Phần mềm học Tiếng Anh miễn phí cho cộng đồng.
+  </footer>
+
+
+  <script>
+    const lessons = [
+      // Chủ đề: Gia đình
+      {
+        vietnamese: "Mẹ",
+        english: "Mother",
+        image:"https://tse4.mm.bing.net/th?id=OIP.UG7bdYzEG9Xv5QusSghwEQHaDt&pid=Api&P=0&h=180",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/mother--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Cha",
+        english: "Father",
+        image: "https://tse1.mm.bing.net/th?id=OIP.JLmlwKqzUNqpAY2PKFjuaAHaE8&pid=Api&P=0&h=180",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/father--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Anh trai",
+        english: "Brother",
+        image: "https://wallpaperaccess.com/full/4525999.jpg",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/brother--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Chị gái",
+        english: "Sister",
+        image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/sister--_gb_1.mp3"
+      },
+
+
+      // Chủ đề: Trường lớp
+      {
+        vietnamese: "Giáo viên",
+        english: "Teacher",
+        image: "https://static.india.com/wp-content/uploads/2022/11/teacher-1.jpg",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/teacher--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Học sinh",
+        english: "Student",
+        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/student--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Bảng đen",
+        english: "Blackboard",
+        image: "https://tse4.mm.bing.net/th?id=OIP.nSRv2PqOc-eX2dPvMqmydwHaEP&pid=Api&P=0&h=180",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/blackboard--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Sách",
+        english: "Book",
+        image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/book--_gb_1.mp3"
+      },
+
+
+      // Chủ đề: Công việc
+      {
+        vietnamese: "Bác sĩ",
+        english: "Doctor",
+        image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/doctor--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Công nhân",
+        english: "Worker",
+        image: "https://watermark.lovepik.com/photo/20220225/large/lovepik-image-of-workers-in-hard-hat-shaking-hands-and-picture_502362258.jpg",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/worker--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Kỹ sư",
+        english: "Engineer",
+        image: "https://tse2.mm.bing.net/th?id=OIP.AsGTH2NK7wQN32rDN4FW4gHaE7&pid=Api&P=0&h=180",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/engineer--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Nông dân",
+        english: "Farmer",
+        image: "https://tse2.mm.bing.net/th?id=OIP.4aRb2nNfDroAQ_MoXzP_dQHaE8&pid=Api&P=0&h=180",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/farmer--_gb_1.mp3"
+      },
+
+
+      // Chủ đề: Động vật
+      {
+        vietnamese: "Con chó",
+        english: "Dog",
+        image: "https://images.unsplash.com/photo-1561037404-61cd46aa615b",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/dog--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Con mèo",
+        english: "Cat",
+        image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/cat--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Con chim",
+        english: "Bird",
+        image: "https://images.unsplash.com/photo-1444464666168-49d633b86797",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/bird--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Con cá",
+        english: "Fish",
+        image: "https://th.bing.com/th/id/OIP.Ot4zyzVNQaZ5SqqtP5b53QHaFS?rs=1&pid=ImgDetMain",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/fish--_gb_1.mp3"
+      },
+
+
+      // Chủ đề: Thực phẩm
+      {
+        vietnamese: "Táo",
+        english: "Apple",
+        image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/apple--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Chuối",
+        english: "Banana",
+        image: "https://images.unsplash.com/photo-1603833665858-e61d17a86224",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/banana--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Cơm",
+        english: "Rice",
+        image: "https://images.unsplash.com/photo-1512058564366-18510be2db19",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/rice--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Nước",
+        english: "Water",
+        image: "https://tse4.mm.bing.net/th?id=OIP.mNj78S7XGi5QHmM2wkv9CQHaE8&pid=Api&P=0&h=180",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/water--_gb_1.mp3"
+      },
+
+
+      // Chủ đề: Giao thông
+      {
+        vietnamese: "Xe đạp",
+        english: "Bicycle",
+        image: "https://images.unsplash.com/photo-1485965120184-e220f721d03e",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/bicycle--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Xe hơi",
+        english: "Car",
+        image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/car--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Xe buýt",
+        english: "Bus",
+        image: "https://th.bing.com/th/id/OIP.-FprCOtT2hRRd9aK5Zem8QHaG8?rs=1&pid=ImgDetMain",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/bus--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Máy bay",
+        english: "Airplane",
+        image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/airplane--_gb_1.mp3"
+      },
+            {
+        vietnamese: "Tàu hỏa",
+        english: "Train",
+        image: "https://tse4.mm.bing.net/th?id=OIP.NIo-bHRFQxIh2_tkTgy3RgHaDG&pid=Api&P=0&h=180",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/train--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Xe máy",
+        english: "Motorbike",
+        image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/motorbike--_gb_1.mp3"
+      },
+
+
+      // Chủ đề: Thời tiết
+      {
+        vietnamese: "Mặt trời",
+        english: "Sun",
+        image: "https://images.unsplash.com/photo-1614642264762-d0a3b8bf3700",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/sun--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Mưa",
+        english: "Rain",
+        image: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/rain--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Mây",
+        english: "Cloud",
+        image: "https://khoinguonsangtao.vn/wp-content/uploads/2022/11/background-may.jpg",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/cloud--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Gió",
+        english: "Wind",
+        image: "https://dubaothoitiet.info/uploads/news-0f89cea0.jpg",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/wind--_gb_1.mp3"
+      },
+
+
+      // Chủ đề: Đồ dùng hàng ngày
+      {
+        vietnamese: "Cái bàn",
+        english: "Table",
+        image: "https://www.collinsdictionary.com/images/full/table_588358070_1000.jpg?version=4.0.167",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/table--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Cái ghế",
+        english: "Chair",
+        image: "https://images.unsplash.com/photo-1517705008128-361805f42e86",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/chair--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Giường",
+        english: "Bed",
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/bed--_gb_1.mp3"
+      },
+      {
+        vietnamese: "Tủ lạnh",
+        english: "Refrigerator",
+        image: "https://tse1.mm.bing.net/th?id=OIP.DWwW39XzEAgsazcEsfdkyAHaHa&pid=Api&P=0&h=180",
+        audio: "https://ssl.gstatic.com/dictionary/static/sounds/oxford/refrigerator--_gb_1.mp3"
+      }
+    ];
+
+
+    const lessonArea = document.getElementById('lessonArea');
+
+
+    lessons.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${item.image}" alt="${item.english}">
+        <h2>${item.vietnamese}</h2>
+        <p>${item.english}</p>
+        <button onclick="new Audio('${item.audio}').play()">Nghe phát âm</button>
+      `;
+      lessonArea.appendChild(card);
+    });
+  </script>
+
+
+</body>
+</html>
